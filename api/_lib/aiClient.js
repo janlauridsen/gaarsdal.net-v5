@@ -8,8 +8,12 @@ export async function callAI(state, userInput) {
   const promptText = prompts[state.prompt_id];
 
   if (!promptText || typeof promptText !== "string") {
-    throw new Error(`Prompt missing: ${state.prompt_id}`);
-  }
+  console.error("❌ PROMPT RESOLUTION FAILED");
+  console.error("state.prompt_id =", state.prompt_id);
+  console.error("promptText =", promptText);
+  console.error("available =", Object.keys(prompts));
+  throw new Error(`Prompt missing: ${state.prompt_id}`);
+}
 
   const messages = [
     { role: "system", content: promptText },
