@@ -17,9 +17,11 @@ export default async function handler(req, res) {
     let outputText = decision.output || "";
     let ai = {
       called: false,
-      bypass_reason: "none",
+      bypass_reason: decision.bypass_reason,
       prompt_id: null,
       model: null,
+      temperature: null,
+      max_tokens: null,
       error: null
     };
 
@@ -32,19 +34,19 @@ export default async function handler(req, res) {
           bypass_reason: "none",
           prompt_id: aiRes.meta.prompt_id,
           model: aiRes.meta.model,
+          temperature: aiRes.meta.temperature,
+          max_tokens: aiRes.meta.max_tokens,
           error: null
         };
       } catch {
         outputText = "Systemet kunne ikke levere et svar.";
         ai.error = "AI_FAILURE";
       }
-    } else {
-      ai.bypass_reason = decision.bypass_reason || "unknown";
     }
 
     const analysis = postAnalyze(outputText, decision.state);
 
-    const logEntry = {
+    res.status(200).json({
       timestamp: Date.now(),
 
       session: {
@@ -53,9 +55,7 @@ export default async function handler(req, res) {
         geo: resolveGeo(req)
       },
 
-      input: {
-        raw: input
-      },
+      input: { raw: input },
 
       state: decision.state,
 
@@ -68,13 +68,11 @@ export default async function handler(req, res) {
 
       output: {
         text: outputText,
-        terminal: Boolean(decision.terminal)
+        terminal: decision.terminal
       },
 
       analysis
-    };
-
-    res.status(200).json(logEntry);
+    });
 
   } catch {
     res.status(500).json({ error: "Server error" });
