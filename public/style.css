@@ -1,3 +1,44 @@
+/* Header row inside response */
+.header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+/* State badge */
+.state-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #DDD9CE;
+  color: #2C2A28;
+  font-weight: 600;
+}
+
+/* Optional per-state nuance */
+.state-0 { background: #E0DDD4; }
+.state-4 { background: #D6E3F0; }
+.state-5 { background: #E3D6F0; }
+.state-7 { background: #D6F0E1; }
+.state-8 { background: #F0DED6; }
+.state-G { background: #F0D6D6; }
+
+/* Terminal marking */
+article.terminal {
+  border-left: 4px solid #2C2A28;
+}
+
+.terminal-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #2C2A28;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
