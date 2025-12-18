@@ -4,7 +4,7 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 120,
-    prompt_id: "state_0_v2"
+    prompt_id: "state_0_v3"
   },
 
   // 1 — Meta / rolleafklaring
