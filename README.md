@@ -1,5 +1,6 @@
 # gaarsdal.net-v5
 
+
 AI-baseret fagligt afklaringssystem med eksplicit state- og aktionstyring.
 
 Dette repository indeholder **design, adfærds-specifikation og test-artefakter**
