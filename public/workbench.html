@@ -1,41 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Workbench</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="animate-fadeIn">
 
-html, body {
-  background: #EFEDE7;
-  color: #2C2A28;
-  font-family: system-ui, sans-serif;
-}
+<header class="container">
+  <h1 class="text-h1">Test Workbench</h1>
+  <div id="activeState" class="state-indicator">State: —</div>
+</header>
 
-.text-h1 {
-  font-size: 48px;
-  font-weight: 600;
-}
+<main class="container">
+  <textarea id="userInput" rows="4"></textarea>
+  <button id="sendBtn">Send</button>
 
-article {
-  background: #fff;
-  border: 1px solid #E2E0D8;
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
+  <div id="errorBanner" class="error hidden">
+    Systemfejl – prøv igen senere.
+  </div>
 
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
+  <section id="responseList"></section>
+</main>
 
-.status-ok { background: #2E7D32; }
-.status-warn { background: #F9A825; }
-.status-error { background: #C62828; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fadeIn {
-  animation: fadeIn .25s ease-out;
-}
+<script src="workbench.js"></script>
+</body>
+</html>
