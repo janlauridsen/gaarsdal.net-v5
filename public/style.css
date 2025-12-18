@@ -1,4 +1,3 @@
-/* Base */
 html, body {
   margin: 0;
   padding: 0;
@@ -8,163 +7,78 @@ html, body {
     Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Layout */
 .container {
   max-width: 960px;
   margin: 0 auto;
   padding: 24px;
 }
 
-header.container {
-  padding-bottom: 8px;
-}
-
-/* Typography */
 .text-h1 {
   font-size: 42px;
   line-height: 1.2;
-  margin: 0 0 8px 0;
+  margin-bottom: 6px;
 }
 
-.text-base-lg {
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-/* Inputs */
 textarea {
   width: 100%;
-  box-sizing: border-box;
   padding: 12px;
   font-size: 15px;
   border-radius: 6px;
   border: 1px solid #D8D5CC;
-  background: #fff;
-  color: #2C2A28;
 }
 
-textarea:focus {
-  outline: none;
-  border-color: #BDBAAE;
-}
-
-/* Buttons */
 button {
   margin-top: 12px;
   padding: 8px 16px;
-  font-size: 14px;
   border-radius: 6px;
-  border: 1px solid #BDBAAE;
   background: #E6E3DA;
-  color: #2C2A28;
+  border: 1px solid #BDBAAE;
   cursor: pointer;
 }
 
-button:hover {
-  background: #DDD9CE;
-}
-
-/* State indicator */
-.state-indicator {
-  font-size: 13px;
-  color: #5A5855;
-}
-
-/* Response cards */
 article {
-  background: #FFFFFF;
+  background: #fff;
   margin-top: 20px;
   padding: 16px;
   border-radius: 8px;
   animation: fadeIn 0.25s ease-out;
 }
 
-/* Meta block */
 .meta {
-  margin-top: 12px;
   font-size: 13px;
   color: #5A5855;
+  margin-top: 10px;
 }
 
-.meta > div {
-  margin-top: 4px;
-}
+.status-ok { color: #2E7D32; font-weight: 600; }
+.status-warn { color: #F9A825; font-weight: 600; }
+.status-error { color: #C62828; font-weight: 700; }
 
-/* Status labels */
-.status-ok {
-  color: #2E7D32;
-  font-weight: 600;
-}
-
-.status-warn {
-  color: #F9A825;
-  font-weight: 600;
-}
-
-.status-error {
-  color: #C62828;
-  font-weight: 600;
-}
-
-/* Error banner */
-.error {
-  margin-top: 12px;
-  padding: 10px;
-  background: #C62828;
-  color: #FFFFFF;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Lint section */
 .lint {
   margin-top: 14px;
-  padding: 12px;
   background: #F6F4EF;
+  padding: 12px;
   border-radius: 6px;
   font-size: 13px;
-}
-
-.lint.ok {
-  color: #2E7D32;
 }
 
 .lint table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
-.lint th,
-.lint td {
-  text-align: left;
-  padding: 6px 8px;
+.lint th, .lint td {
+  padding: 6px;
   border-bottom: 1px solid #E0DDD4;
 }
 
-.lint th {
-  font-weight: 600;
-  color: #5A5855;
-}
-
-.lint-warn td {
-  color: #F9A825;
-  font-weight: 500;
-}
-
-.lint-error td {
-  color: #C62828;
-  font-weight: 600;
-}
-
-/* Details / raw log */
-details {
-  margin-top: 12px;
-}
+.lint-rule-A { background: #FDECEA; }
+.lint-rule-B { background: #FDECEA; }
+.lint-rule-C { background: #FDECEA; }
+.lint-rule-D { background: #FFF8E1; }
+.lint-rule-E { background: #FFF8E1; }
+.lint-rule-F { background: #FFF8E1; }
 
 details summary {
   cursor: pointer;
@@ -173,41 +87,13 @@ details summary {
 }
 
 details pre {
-  margin-top: 8px;
-  padding: 10px;
   background: #EFEDE7;
-  border-radius: 6px;
+  padding: 10px;
   font-size: 12px;
-  overflow-x: auto;
-}
-
-/* Scroll behavior */
-#gaarsdal-chat-window {
-  scroll-behavior: smooth;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D8D5CC;
   border-radius: 6px;
 }
 
-/* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.25s ease-out;
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
 }
