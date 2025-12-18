@@ -1,11 +1,8 @@
-export default function handler(req, res) {
-  const token = req.headers.authorization;
-  if (token !== `Bearer ${process.env.ADMIN_TOKEN}`) {
-    return res.status(401).end();
-  }
+import { listSessions } from "../../logStore.js";
+import { requireAdmin } from "../../adminAuth.js";
 
-  res.json({
-    sessions: [],
-    note: "Session persistence aktiveres i senere fase"
-  });
+export default function handler(req, res) {
+  if (!requireAdmin(req, res)) return;
+  res.statusCode = 200;
+  res.json(listSessions());
 }
