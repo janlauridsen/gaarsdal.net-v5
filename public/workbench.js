@@ -5,6 +5,9 @@ const input = document.getElementById("userInput");
 const btn = document.getElementById("sendBtn");
 const list = document.getElementById("responseList");
 
+const stateValue = document.getElementById("stateValue");
+const stateTrigger = document.getElementById("stateTrigger");
+
 btn.onclick = send;
 input.onkeydown = e => {
   if (e.key === "Enter" && !e.shiftKey) {
@@ -25,7 +28,14 @@ async function send() {
 
   const data = await res.json();
   sessionId = data.session_id;
+
+  updateActiveState(data);
   render(++seq, data);
+}
+
+function updateActiveState(d) {
+  stateValue.textContent = `${d.state.id} – ${d.state.label}`;
+  stateTrigger.textContent = d.trigger ? `(${d.trigger})` : "";
 }
 
 function render(i, d) {
@@ -42,10 +52,12 @@ function render(i, d) {
       <strong>Svar #${i}</strong>
       <span class="status-dot ${cls}"></span>
     </div>
-    <p>${d.output}</p>
-    <details>
+
+    <p class="mt-2">${d.output}</p>
+
+    <details class="mt-3">
       <summary>Diagnostik</summary>
-      <div>
+      <div class="mt-2 text-sm">
         State: ${d.state.id} – ${d.state.label}<br>
         Trigger: ${d.trigger}<br>
         Status: ${d.analysis.status}<br>
