@@ -1,80 +1,46 @@
-import { resolveState } from "../server/stateResolver.js";
-import { callAI } from "../server/aiClient.js";
-import { postAnalyze } from "../server/postAnalysis.js";
-import { resolveGeo } from "../server/geo.js";
+import { getOrCreateSession, appendLog } from "../logStore.js";
+import { postAnalyze } from "../postAnalysis.js";
+import { resolveState } from "../stateResolver.js";
+import { callAI } from "../aiClient.js";
 
 export default async function handler(req, res) {
-  try {
-    if (req.method !== "POST") return res.status(405).end();
+  const body = JSON.parse(req.body || "{}");
+  const ip = req.headers["x-forwarded-for"] || "unknown";
 
-    const { input, session_id } = req.body || {};
-    if (!input || typeof input !== "string") {
-      return res.status(400).json({ error: "Invalid input" });
-    }
+  const session = getOrCreateSession({
+    session_id: body.session_id,
+    ip,
+    geo: body.geo || null
+  });
 
-    const decision = resolveState(input);
+  const state = resolveState(body.input);
+  let outputText = "";
+  let aiMeta = { called: false, bypass_reason: "none" };
 
-    let outputText = decision.output || "";
-    let ai = {
-      called: false,
-      bypass_reason: decision.bypass_reason,
-      prompt_id: null,
-      model: null,
-      temperature: null,
-      max_tokens: null,
-      error: null
-    };
-
-    if (decision.ai && decision.prompt) {
-      try {
-        const aiRes = await callAI(decision.prompt);
-        outputText = aiRes.text;
-        ai = {
-          called: true,
-          bypass_reason: "none",
-          prompt_id: aiRes.meta.prompt_id,
-          model: aiRes.meta.model,
-          temperature: aiRes.meta.temperature,
-          max_tokens: aiRes.meta.max_tokens,
-          error: null
-        };
-      } catch {
-        outputText = "Systemet kunne ikke levere et svar.";
-        ai.error = "AI_FAILURE";
-      }
-    }
-
-    const analysis = postAnalyze(outputText, decision.state);
-
-    res.status(200).json({
-      timestamp: Date.now(),
-
-      session: {
-        session_id: session_id || crypto.randomUUID(),
-        ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-        geo: resolveGeo(req)
-      },
-
-      input: { raw: input },
-
-      state: decision.state,
-
-      transition: {
-        type: decision.transition_type,
-        trigger: decision.trigger
-      },
-
-      ai,
-
-      output: {
-        text: outputText,
-        terminal: decision.terminal
-      },
-
-      analysis
-    });
-
-  } catch {
-    res.status(500).json({ error: "Server error" });
+  if (state.ai) {
+    const ai = await callAI(state, body.input);
+    outputText = ai.text;
+    aiMeta = ai.meta;
+  } else {
+    outputText = state.bypass_text || "";
+    aiMeta = { called: false, bypass_reason: state.bypass_reason };
   }
+
+  const analysis = postAnalyze(outputText, state);
+
+  const entry = {
+    timestamp: Date.now(),
+    session,
+    input: { raw: body.input },
+    state: { id: state.id, label: state.label },
+    transition: { type: "enter", trigger: state.trigger },
+    ai: aiMeta,
+    output: { text: outputText, terminal: state.terminal },
+    analysis
+  };
+
+  appendLog(session.session_id, entry);
+
+  res.statusCode = 200;
+  res.json(entry);
 }
