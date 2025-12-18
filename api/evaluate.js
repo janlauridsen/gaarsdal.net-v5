@@ -1,7 +1,7 @@
-import { getOrCreateSession, appendLog } from "../server/logStore.js";
-import { resolveState } from "../server/stateResolver.js";
-import { callAI } from "../server/aiClient.js";
-import { postAnalyze } from "../server/postAnalysis.js";
+import { getOrCreateSession, appendLog } from "./_lib/logStore.js";
+import { resolveState } from "./_lib/stateResolver.js";
+import { callAI } from "./_lib/aiClient.js";
+import { postAnalyze } from "./_lib/postAnalysis.js";
 
 console.log("AI CLIENT LOADED FROM:", import.meta.url);
 
