@@ -12,3 +12,7 @@ export function getSession(id, ip) {
   s.last = Date.now();
   return s;
 }
+
+export function getAllSessions() {
+  return [...sessions.values()];
+}
