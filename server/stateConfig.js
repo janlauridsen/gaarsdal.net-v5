@@ -80,6 +80,6 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 40,
-    prompt_id: "guard_v1"
+    prompt_id: "guard_v2"
   }
 };
