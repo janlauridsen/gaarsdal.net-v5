@@ -3,6 +3,8 @@ import { resolveState } from "../server/stateResolver.js";
 import { callAI } from "../server/aiClient.js";
 import { postAnalyze } from "../server/postAnalysis.js";
 
+console.log("AI CLIENT LOADED FROM:", import.meta.url);
+
 export default async function handler(req, res) {
   try {
     // ---- Parse body safely (Vercel-safe) ----
