@@ -31,8 +31,23 @@ async function send() {
     body: JSON.stringify({ input: value, session_id: sessionId })
   });
 
-  const entry = await res.json();
-  sessionId = entry.session.session_id;
+  if (!res.ok) {
+  const err = await res.json();
+  console.error("API error:", err);
+  alert("Server error – se console");
+  return;
+}
+
+const entry = await res.json();
+
+if (!entry.session) {
+  console.error("Invalid entry:", entry);
+  return;
+}
+
+sessionId = entry.session.session_id;
+
+
 
   render(entry);
 
