@@ -11,10 +11,7 @@ resetBtn.onclick = resetSession;
 input.focus();
 
 input.addEventListener("keydown", (e) => {
-  const isEnter = e.key === "Enter";
-  const isCtrlEnter = isEnter && (e.ctrlKey || e.metaKey);
-
-  if ((isEnter && !e.shiftKey) || isCtrlEnter) {
+  if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     send();
   }
@@ -55,6 +52,10 @@ function resetSession() {
 function render(entry) {
   const el = document.createElement("article");
 
+  if (entry.output.terminal) {
+    el.classList.add("terminal");
+  }
+
   const statusClass =
     entry.analysis.status === "ok"
       ? "status-ok"
@@ -63,16 +64,22 @@ function render(entry) {
       : "status-error";
 
   el.innerHTML = `
+    <div class="header">
+      <span class="state-badge state-${entry.state.id}">
+        State ${entry.state.id}
+      </span>
+      ${entry.output.terminal ? `<span class="terminal-badge">Terminal</span>` : ""}
+    </div>
+
     <p>${entry.output.text}</p>
 
     <div class="meta">
-      <div>State: ${entry.state.id}</div>
       <div>Status:
         <span class="${statusClass}">
           ${entry.analysis.status.toUpperCase()}
         </span>
       </div>
-      <div>Terminal: ${entry.output.terminal}</div>
+      <div>Transition: ${entry.transition.type}</div>
     </div>
 
     ${renderLint(entry.analysis.matches)}
@@ -83,7 +90,6 @@ function render(entry) {
     </details>
   `;
 
-  // Nyeste svar øverst
   responses.prepend(el);
 }
 
