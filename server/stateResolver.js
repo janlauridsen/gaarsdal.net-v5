@@ -1,7 +1,7 @@
-export function resolveState(input, session) {
+export function resolveState(input) {
   const t = input.toLowerCase();
 
-  if (t.match(/idiot|fup|dum/)) {
+  if (/(idiot|fup|dum)/.test(t)) {
     return {
       state: { id: "G", label: "Guard" },
       trigger: "provokation",
@@ -26,7 +26,7 @@ export function resolveState(input, session) {
       ai: true,
       prompt: {
         id: "state_7_v1",
-        system: "Faglig afklaring af flyskræk via hypnose.",
+        system: "Faglig afklaring af flyskræk.",
         user: input
       }
     };
