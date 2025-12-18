@@ -1,10 +1,38 @@
-document.getElementById("loadBtn").onclick = async () => {
-  const res = await fetch("/api/admin/sessions", {
-    headers: {
-      Authorization: `Bearer ${prompt("Admin token")}`
-    }
-  });
+import { renderResponse } from "./ui/renderResponse.js";
 
-  document.getElementById("out").textContent =
-    res.ok ? JSON.stringify(await res.json(), null, 2) : "Access denied";
-};
+const sessionSelect = document.getElementById("sessionSelect");
+const responses = document.getElementById("responses");
+
+loadSessions();
+
+sessionSelect.onchange = loadSession;
+
+async function loadSessions() {
+  const res = await fetch("/api/admin/sessions");
+  const sessions = await res.json();
+
+  sessions.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s.session_id;
+    opt.textContent = `${s.session_id} (${s.count} inputs)`;
+    sessionSelect.appendChild(opt);
+  });
+}
+
+async function loadSession() {
+  const id = sessionSelect.value;
+  if (!id) return;
+
+  responses.innerHTML = "";
+
+  const res = await fetch(`/api/admin/session/${id}`);
+  const entries = await res.json();
+
+  entries
+    .sort((a, b) => a.timestamp - b.timestamp)
+    .forEach(entry => {
+      responses.appendChild(
+        renderResponse(entry, { collapsed: false })
+      );
+    });
+}
