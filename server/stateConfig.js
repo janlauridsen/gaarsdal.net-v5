@@ -34,7 +34,7 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 300,
-    prompt_id: "state_4_v2"
+    prompt_id: "state_4_v3"
   },
 
   // 5 — Evidens / risiko
@@ -58,7 +58,7 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 180,
-    prompt_id: "state_7_v2"
+    prompt_id: "state_7_v3"
   },
 
   // 8 — Gentagelse / terminal
