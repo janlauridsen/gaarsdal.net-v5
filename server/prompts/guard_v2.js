@@ -1,1 +1,3 @@
+export default `
 Denne type henvendelse håndteres ikke.
+`;
