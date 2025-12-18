@@ -1,6 +1,7 @@
 import { resolveState } from "../server/stateResolver.js";
 import { callAI } from "../server/aiClient.js";
 import { postAnalyze } from "../server/postAnalysis.js";
+import { resolveGeo } from "../server/geo.js";
 
 export default async function handler(req, res) {
   try {
@@ -35,13 +36,7 @@ export default async function handler(req, res) {
         };
       } catch {
         outputText = "Systemet kunne ikke levere et svar.";
-        ai = {
-          called: true,
-          bypass_reason: "none",
-          prompt_id: null,
-          model: null,
-          error: "AI_FAILURE"
-        };
+        ai.error = "AI_FAILURE";
       }
     } else {
       ai.bypass_reason = decision.bypass_reason || "unknown";
@@ -55,7 +50,7 @@ export default async function handler(req, res) {
       session: {
         session_id: session_id || crypto.randomUUID(),
         ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-        geo: null
+        geo: resolveGeo(req)
       },
 
       input: {
