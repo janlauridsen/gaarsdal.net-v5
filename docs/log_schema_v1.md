@@ -8,6 +8,20 @@ Samme struktur anvendes til:
 - senere persistens (database / filer)
 - Admin UI
 
+### session.geo
+
+Geo-data leveres af Vercel og er:
+- ikke præcis
+- ikke brugerprofilerende
+- kun til analyse og sikkerhed
+
+Felter:
+- country (ISO-2)
+- region
+- city
+
+Hvis data ikke findes, sættes felter til null.
+
 Workbench = direkte rendering af én log-entry.
 
 ---
