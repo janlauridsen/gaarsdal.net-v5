@@ -13,30 +13,74 @@ export default async function handler(req, res) {
 
     const decision = resolveState(input);
 
-    let output = decision.output || "";
-    let aiMeta = { called: false };
+    let outputText = decision.output || "";
+    let ai = {
+      called: false,
+      bypass_reason: "none",
+      prompt_id: null,
+      model: null,
+      error: null
+    };
 
     if (decision.ai && decision.prompt) {
       try {
-        const ai = await callAI(decision.prompt);
-        output = ai.text;
-        aiMeta = ai.meta;
+        const aiRes = await callAI(decision.prompt);
+        outputText = aiRes.text;
+        ai = {
+          called: true,
+          bypass_reason: "none",
+          prompt_id: aiRes.meta.prompt_id,
+          model: aiRes.meta.model,
+          error: null
+        };
       } catch {
-        output = "Systemet kunne ikke levere et svar på nuværende tidspunkt.";
-        aiMeta = { called: true, error: "AI_FAILURE" };
+        outputText = "Systemet kunne ikke levere et svar.";
+        ai = {
+          called: true,
+          bypass_reason: "none",
+          prompt_id: null,
+          model: null,
+          error: "AI_FAILURE"
+        };
       }
+    } else {
+      ai.bypass_reason = decision.bypass_reason || "unknown";
     }
 
-    const analysis = postAnalyze(output, decision.state);
+    const analysis = postAnalyze(outputText, decision.state);
 
-    res.status(200).json({
-      session_id: session_id || crypto.randomUUID(),
-      output,
+    const logEntry = {
+      timestamp: Date.now(),
+
+      session: {
+        session_id: session_id || crypto.randomUUID(),
+        ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+        geo: null
+      },
+
+      input: {
+        raw: input
+      },
+
       state: decision.state,
-      trigger: decision.trigger,
-      ai: aiMeta,
+
+      transition: {
+        type: decision.transition_type,
+        trigger: decision.trigger
+      },
+
+      ai,
+
+      output: {
+        text: outputText,
+        terminal: Boolean(decision.terminal)
+      },
+
       analysis
-    });
+    };
+
+    res.status(200).json(logEntry);
+
   } catch {
     res.status(500).json({ error: "Server error" });
   }
