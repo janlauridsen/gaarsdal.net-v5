@@ -1,35 +1,50 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <title>Test Workbench</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="animate-fadeIn">
+let seq = 0;
 
-<header class="max-w-5xl mx-auto px-6 py-8">
-  <h1 class="text-h1 mb-4">Test Workbench</h1>
-  <p class="text-base-lg max-w-3xl">Internt test- og inspektionsværktøj.</p>
-</header>
+const input = document.getElementById("userInput");
+const btn = document.getElementById("sendBtn");
+const list = document.getElementById("responseList");
 
-<main class="max-w-5xl mx-auto px-6 pb-16">
+btn.onclick = send;
+input.onkeydown = e => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    send();
+  }
+};
 
-<section class="mb-10">
-  <label class="block mb-2 font-medium">Simuler brugerinput</label>
-  <textarea id="userInput" rows="4"
-    class="w-full p-4 rounded border border-gray-300 bg-white"></textarea>
-  <button id="sendBtn"
-    class="mt-4 px-6 py-2 rounded bg-black text-white">
-    Send
-  </button>
-</section>
+function send() {
+  const text = input.value.trim();
+  if (!text) return;
+  seq++;
+  const res = apiMock(text);
+  render(seq, res);
+}
 
-<section id="responseList" class="space-y-8"></section>
-
-</main>
-
-<script src="api-mock.js"></script>
-<script src="workbench.js"></script>
-</body>
-</html>
+function render(i, d) {
+  const el = document.createElement("article");
+  el.className = "p-6 bg-white rounded animate-fadeIn";
+  el.innerHTML = `
+    <strong>Svar #${i}</strong>
+    <p class="mt-4">${d.output}</p>
+    <details class="mt-4">
+      <summary>Diagnostik
+        <span class="status-dot ${d.analysis.status === "ok" ? "status-ok" : "status-error"}"></span>
+      </summary>
+      <div class="text-sm mt-4">
+        <div><b>State:</b> ${d.state.id} – ${d.state.label}</div>
+        <div><b>Trigger:</b> ${d.trigger}</div>
+        <div class="mt-2"><b>AI:</b>
+          called=${d.ai.called},
+          model=${d.ai.model},
+          temp=${d.ai.temperature},
+          prompt=${d.ai.prompt_id}
+        </div>
+        <div class="mt-2"><b>Analysis:</b>
+          ${d.analysis.status},
+          anomalies=${JSON.stringify(d.analysis.anomalies)}
+        </div>
+      </div>
+    </details>
+  `;
+  list.appendChild(el);
+}
