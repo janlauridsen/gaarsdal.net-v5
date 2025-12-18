@@ -1,11 +1,9 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function callAI(prompt) {
-  const completion = await client.chat.completions.create({
+  const res = await client.chat.completions.create({
     model: "gpt-4.1-mini",
     temperature: 0,
     messages: [
@@ -15,7 +13,7 @@ export async function callAI(prompt) {
   });
 
   return {
-    text: completion.choices[0].message.content,
+    text: res.choices[0].message.content,
     meta: {
       called: true,
       model: "gpt-4.1-mini",
