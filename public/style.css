@@ -19,10 +19,36 @@ html, body {
 }
 
 article {
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #E2E0D8;
   border-radius: 6px;
-  padding: 16px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status-ok {
+  background: #2E7D32;
+}
+
+.status-warn {
+  background: #F9A825;
+}
+
+.status-error {
+  background: #C62828;
+}
+
+details summary {
+  cursor: pointer;
+  user-select: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
 }
 
 @keyframes fadeIn {
