@@ -20,21 +20,27 @@ async function send() {
 
     if (!res.ok) throw new Error();
 
-    const data = await res.json();
-    sessionId = data.session_id;
+    const entry = await res.json();
+    sessionId = entry.session.session_id;
 
-    stateBox.textContent = `State: ${data.state.id} – ${data.state.label}`;
-    render(data);
+    stateBox.textContent =
+      `State: ${entry.state.id} – ${entry.state.label}`;
+
+    render(entry);
   } catch {
     errorBanner.classList.remove("hidden");
   }
 }
 
-function render(d) {
+function render(e) {
   const el = document.createElement("article");
   el.innerHTML = `
-    <p>${d.output}</p>
-    <small>${d.analysis.status.toUpperCase()}</small>
+    <p>${e.output.text}</p>
+
+    <details>
+      <summary>Log entry</summary>
+      <pre>${JSON.stringify(e, null, 2)}</pre>
+    </details>
   `;
   list.appendChild(el);
 }
