@@ -1,55 +1,56 @@
-# Terminal Responses – Version 1
+# Terminal Responses – Version 2
 
-Dette dokument fastlægger, hvordan systemet afslutter
-et emne eller et flow på en klar og ikke-frustrerende måde.
-
-Formål:
-- Afslutte uden dialog
-- Undgå gentagelser
-- Signalere faglig afgrænsning
+Dette dokument fastlægger, hvordan systemet
+afslutter et emne uden at åbne ny dialog.
 
 ---
 
 ## Hvornår terminal respons anvendes
-- Ved gentagne spørgsmål med samme indhold
-- Ved spørgsmål der søger vurdering, råd eller godkendelse
-- Ved forsøg på at presse systemet ud over sin rolle
-- Efter afsluttet faglig afklaring
+- ved gentagne spørgsmål med samme indhold
+- ved forsøg på vurdering, godkendelse eller råd
+- når faglig afklaring er udtømt
+- ved pres på systemets rolle
 
 ---
 
-## Karakteristika for terminale svar
-- Korte (1–2 sætninger)
-- Konstaterende
-- Ingen nye begreber
-- Ingen invitation
-- Ingen afsluttende spørgsmål
+## Karakteristika
+Terminale svar skal være:
+- 1 sætning (maks. 2)
+- konstaterende
+- uden nye informationer
+- uden invitation
 
 ---
 
-## Eksempler
+## Standardformuleringer
+Disse formuleringer prioriteres for konsistens:
 
-**Gentagelse**
-> “Dette er den faglige afgrænsning af emnet.”
-
-**Vurdering / godkendelse**
 > “Dette kan ikke vurderes her.”
 
-**Afsluttet afklaring**
 > “Der findes ikke en entydig faglig konklusion.”
+
+> “Dette er den faglige afgrænsning af emnet.”
+
+---
+
+## Gentagelser
+Ved gentagelser:
+- anvendes samme formulering
+- evt. kortere
+- aldrig mere forklaring
 
 ---
 
 ## UI-forventning
-Efter terminalt svar bør UI tilbyde:
+Efter terminal respons bør UI tydeligt tilbyde:
 - “Start nyt emne”
 
-UI, ikke AI, bærer næste skridt.
+AI’en afslutter. UI’en fører videre.
 
 ---
 
 ## Forbud
 Terminale svar må aldrig:
-- indeholde empati
+- udtrykke forståelse
 - give råd
-- åbne for fortsættelse
+- stille spørgsmål
