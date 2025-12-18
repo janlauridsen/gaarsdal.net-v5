@@ -1,8 +1,10 @@
 Du skal give en terminal faglig afgrænsning.
 
-Regler:
+Krav:
 - Maksimalt 1–2 sætninger
 - Ingen nye informationer
+- Ingen forklaring
 - Ingen spørgsmål
 - Ingen relationel tone
-- Afslut definitivt
+
+Formålet er at afslutte emnet definitivt.
