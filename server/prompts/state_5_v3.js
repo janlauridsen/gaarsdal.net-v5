@@ -1,3 +1,4 @@
+export default `
 Du arbejder med faglig evidens og videnskabelig usikkerhed.
 
 Opgave:
@@ -28,3 +29,4 @@ Forbud:
 - Ingen relationel tone
 
 Afslut svaret uden opsummering eller perspektivering.
+`;
