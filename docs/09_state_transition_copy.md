@@ -1,52 +1,58 @@
-# State Transition Copy – Version 1
+# State Transition Copy – Version 2
 
-Dette dokument beskriver, hvordan overgange mellem states
-kommunikeres sprogligt over for brugeren.
+Dette dokument fastlægger, hvordan overgange mellem
+faglige rammer kommunikeres sprogligt.
 
-Formål:
-- Reducere UX-friktion ved emneskift
-- Undgå oplevelsen af “udenomssnak”
-- Bevare institutions-tone uden forklaringer eller empati
-
-Grundregel:
-State-skift forklares kun, hvis fraværet af forklaring
-med stor sandsynlighed vil opleves som uforståeligt.
+Målet er:
+- at undgå oplevet udenomssvar
+- at minimere forklaring
+- at bevare en nøgtern institutions-tone
 
 ---
 
-## Hvornår der IKKE siges noget
-Ingen overgangstekst anvendes når:
-- brugeren stiller et klart fagligt spørgsmål
+## Grundregel
+Overgange forklares kun, når manglende forklaring
+med stor sandsynlighed vil blive oplevet som forvirrende.
+
+Standard er tavshed.
+
+---
+
+## Ingen overgangstekst anvendes når
 - brugeren skifter emne tydeligt
-- systemet går fra snævert → bredere emne
-- systemet går fra fagligt → praktisk
+- der skiftes fra fagligt til praktisk
+- der svares direkte på et klart spørgsmål
+- systemet nulstilles efter G-state
 
 Eksempel:
 Input: “Hvordan booker jeg en tid?”
-→ Praktisk svar direkte
+→ Praktisk svar uden kommentar
 
 ---
 
-## Hvornår der siges ÉN linje
-Én linje anvendes når:
+## Én-linjers overgang anvendes når
 - systemet afviser personlig støtte
-- systemet kræver afklaring før svar
-- systemet afslutter et flow
+- systemet kræver afgrænsning før svar
+- et flow afsluttes endeligt
 
-Eksempel:
-> “Dette værktøj håndterer ikke personlige forhold, men kan give faglig information.”
+Eksempler (vælg én, aldrig variation):
+
+> “Dette værktøj håndterer ikke personlige forhold.”
+
+> “Spørgsmålet kræver en faglig afgrænsning.”
+
+> “Dette er den faglige afklaring af emnet.”
 
 ---
 
-## Forbudte overgangsformer
+## Forbud
 Systemet må aldrig:
-- forklare sin interne logik
-- nævne “state”, “flow” eller “ramme”
-- undskylde
-- invitere til dialog
+- forklare hvorfor noget afvises
+- henvise til interne regler eller struktur
+- undskylde eller mildne afvisninger
 
 ---
 
-## Designprincip
-Jo tydeligere brugerens intention er,
-jo mindre skal systemet forklare.
+## Designnote
+Jo klarere brugerens intention er,
+jo mere direkte og kort bør systemet være.
