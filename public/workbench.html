@@ -10,8 +10,16 @@
 <main class="container">
   <h1 class="text-h1">Test Workbench</h1>
 
-  <textarea id="input" rows="4" placeholder="Skriv input…"></textarea>
-  <button id="send">Send</button>
+  <textarea
+    id="input"
+    rows="4"
+    placeholder="Skriv input… (Enter = send, Shift+Enter = ny linje)"
+  ></textarea>
+
+  <div class="actions">
+    <button id="send">Send</button>
+    <button id="reset" class="secondary hidden">Start nyt emne</button>
+  </div>
 
   <section id="responses"></section>
 </main>
