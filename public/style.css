@@ -3,16 +3,13 @@
 @tailwind utilities;
 
 html, body {
-  margin: 0;
-  padding: 0;
   background: #EFEDE7;
   color: #2C2A28;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 .text-h1 {
   font-size: 48px;
-  line-height: 1.2;
   font-weight: 600;
 }
 
@@ -21,42 +18,12 @@ html, body {
   line-height: 1.7;
 }
 
-textarea,
-input,
-select,
-button {
-  font-family: inherit;
-  font-size: 14px;
-}
-
-textarea { resize: vertical; }
-button { cursor: pointer; }
-
 article {
-  background: #FFFFFF;
-  border-radius: 6px;
+  background: #fff;
   border: 1px solid #E2E0D8;
+  border-radius: 6px;
+  padding: 16px;
 }
-
-details summary {
-  cursor: pointer;
-  user-select: none;
-}
-
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.status-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.status-ok { background: #2E7D32; }
-.status-warn { background: #F9A825; }
-.status-error { background: #C62828; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(3px); }
@@ -64,14 +31,5 @@ details summary::-webkit-details-marker {
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.25s ease-out;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D8D5CC;
-  border-radius: 6px;
+  animation: fadeIn .25s ease-out;
 }
