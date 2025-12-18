@@ -10,3 +10,4 @@ sessions.forEach(s => {
   d.textContent = `Session ${s.id} · IP ${s.ip} · Inputs ${s.inputs}`;
   root.appendChild(d);
 });
+
