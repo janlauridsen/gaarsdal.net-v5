@@ -1,38 +1,19 @@
-let sessionId = null;
+const input = document.getElementById("input");
+const send = document.getElementById("send");
+const responses = document.getElementById("responses");
 
-const input = document.getElementById("userInput");
-const btn = document.getElementById("sendBtn");
-const list = document.getElementById("responseList");
-const stateBox = document.getElementById("activeState");
-const errorBanner = document.getElementById("errorBanner");
+send.onclick = async () => {
+  const res = await fetch("/api/evaluate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ input: input.value })
+  });
 
-btn.onclick = send;
+  const entry = await res.json();
+  render(entry);
+};
 
-async function send() {
-  errorBanner.classList.add("hidden");
-
-  try {
-    const res = await fetch("/api/evaluate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input: input.value, session_id: sessionId })
-    });
-
-    if (!res.ok) throw new Error();
-
-    const entry = await res.json();
-    sessionId = entry.session.session_id;
-
-    stateBox.textContent =
-      `State: ${entry.state.id} – ${entry.state.label}`;
-
-    renderEntry(entry);
-  } catch {
-    errorBanner.classList.remove("hidden");
-  }
-}
-
-function renderEntry(entry) {
+function render(entry) {
   const el = document.createElement("article");
 
   const statusClass =
@@ -46,49 +27,47 @@ function renderEntry(entry) {
     <p>${entry.output.text}</p>
 
     <div class="meta">
-      <div><strong>Terminal:</strong> ${entry.output.terminal}</div>
-      <div><strong>Transition:</strong> ${entry.transition.type} (${entry.transition.trigger})</div>
-      <div><strong>AI:</strong> ${entry.ai.called ? "CALLED" : "BYPASSED"} ${entry.ai.bypass_reason || ""}</div>
-      <div><strong>Status:</strong> <span class="${statusClass}">${entry.analysis.status.toUpperCase()}</span></div>
+      <div>State: ${entry.state.id}</div>
+      <div>Status: <span class="${statusClass}">
+        ${entry.analysis.status.toUpperCase()}
+      </span></div>
     </div>
 
-    ${renderMatches(entry.analysis.matches)}
+    ${renderLint(entry.analysis.matches)}
 
     <details>
-      <summary>Raw log entry</summary>
+      <summary>Raw log</summary>
       <pre>${JSON.stringify(entry, null, 2)}</pre>
     </details>
   `;
 
-  list.appendChild(el);
+  responses.appendChild(el);
 }
 
-function renderMatches(matches = []) {
+function renderLint(matches = []) {
   if (!matches.length) {
-    return `<div class="lint ok">Ingen lint-træffere</div>`;
+    return `<div class="lint status-ok">Ingen lint-fejl</div>`;
   }
 
-  const rows = matches.map(m => `
-    <tr class="lint-${m.severity}">
-      <td>${m.rule}</td>
-      <td>${m.severity.toUpperCase()}</td>
-    </tr>
-  `).join("");
+  const rows = matches.map(m => {
+    const group = m.rule.charAt(0);
+    return `
+      <tr class="lint-rule-${group}">
+        <td>${m.rule}</td>
+        <td>${m.severity.toUpperCase()}</td>
+      </tr>
+    `;
+  }).join("");
+
+  const open = matches.some(m => m.severity === "error") ? "open" : "";
 
   return `
-    <div class="lint">
-      <strong>Lint matches</strong>
+    <details class="lint" ${open}>
+      <summary>Lint (${matches.length})</summary>
       <table>
-        <thead>
-          <tr>
-            <th>Rule</th>
-            <th>Severity</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows}
-        </tbody>
+        <thead><tr><th>Rule</th><th>Severity</th></tr></thead>
+        <tbody>${rows}</tbody>
       </table>
-    </div>
+    </details>
   `;
 }
