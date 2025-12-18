@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     });
 
     // ---- State resolution ----
-    const state = resolveState(rawInput);
+    const state = resolveState({ input: rawInput });
 
     let outputText = "";
     let aiMeta = {
