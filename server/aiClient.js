@@ -1,23 +1,25 @@
 import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-/**
- * Load prompt text from /server/prompts
- */
+// Resolve directory correctly on Vercel
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 function loadPrompt(promptId) {
   const filePath = path.join(
-    process.cwd(),
-    "server",
+    __dirname,
     "prompts",
     `${promptId}.md`
   );
 
   if (!fs.existsSync(filePath)) {
+    console.error("PROMPT NOT FOUND:", filePath);
     return null;
   }
 
