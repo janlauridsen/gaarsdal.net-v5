@@ -1,5 +1,5 @@
 import { stateConfig } from "./stateConfig.js";
-import { loadPrompt } from "./renderResponse.js";
+import { loadPrompt } from "../renderResponse.js";
 
 export function resolveState({ input }) {
   const t = input.toLowerCase();
