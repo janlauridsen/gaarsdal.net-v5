@@ -19,14 +19,17 @@ html, body {
   margin-bottom: 6px;
 }
 
+/* Input */
 textarea {
   width: 100%;
   padding: 12px;
   font-size: 15px;
   border-radius: 6px;
   border: 1px solid #D8D5CC;
+  box-sizing: border-box;
 }
 
+/* Buttons */
 button {
   margin-top: 12px;
   padding: 8px 16px;
@@ -36,6 +39,20 @@ button {
   cursor: pointer;
 }
 
+button.secondary {
+  background: #EFEDE7;
+  border-style: dashed;
+}
+
+/* Actions row */
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Response cards */
 article {
   background: #fff;
   margin-top: 20px;
@@ -50,10 +67,12 @@ article {
   margin-top: 10px;
 }
 
+/* Status */
 .status-ok { color: #2E7D32; font-weight: 600; }
 .status-warn { color: #F9A825; font-weight: 600; }
 .status-error { color: #C62828; font-weight: 700; }
 
+/* Lint */
 .lint {
   margin-top: 14px;
   background: #F6F4EF;
@@ -68,7 +87,8 @@ article {
   margin-top: 6px;
 }
 
-.lint th, .lint td {
+.lint th,
+.lint td {
   padding: 6px;
   border-bottom: 1px solid #E0DDD4;
 }
@@ -80,6 +100,7 @@ article {
 .lint-rule-E { background: #FFF8E1; }
 .lint-rule-F { background: #FFF8E1; }
 
+/* Details / raw log */
 details summary {
   cursor: pointer;
   font-size: 13px;
@@ -91,8 +112,15 @@ details pre {
   padding: 10px;
   font-size: 12px;
   border-radius: 6px;
+  overflow-x: auto;
 }
 
+/* Utilities */
+.hidden {
+  display: none;
+}
+
+/* Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
