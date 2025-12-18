@@ -5,22 +5,15 @@
   <title>Test Workbench</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="animate-fadeIn">
-
-<header class="container">
-  <h1 class="text-h1">Test Workbench</h1>
-  <div id="activeState" class="state-indicator">State: —</div>
-</header>
+<body>
 
 <main class="container">
-  <textarea id="userInput" rows="4"></textarea>
-  <button id="sendBtn">Send</button>
+  <h1 class="text-h1">Test Workbench</h1>
 
-  <div id="errorBanner" class="error hidden">
-    Systemfejl – prøv igen senere.
-  </div>
+  <textarea id="input" rows="4"></textarea>
+  <button id="send">Send</button>
 
-  <section id="responseList"></section>
+  <section id="responses"></section>
 </main>
 
 <script src="workbench.js"></script>
