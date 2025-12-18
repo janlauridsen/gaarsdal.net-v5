@@ -5,18 +5,10 @@ const sessions = new Map();
 
 export function getSession(id, ip) {
   let s = id && sessions.get(id);
-
   if (!s || Date.now() - s.last > TTL) {
-    s = {
-      id: uuid(),
-      ip,
-      created: Date.now(),
-      last: Date.now(),
-      log: []
-    };
+    s = { id: uuid(), ip, created: Date.now(), last: Date.now(), log: [] };
     sessions.set(s.id, s);
   }
-
   s.last = Date.now();
   return s;
 }
