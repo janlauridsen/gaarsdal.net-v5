@@ -1,11 +1,20 @@
 const input = document.getElementById("input");
 const sendBtn = document.getElementById("send");
+const resetBtn = document.getElementById("reset");
 const responses = document.getElementById("responses");
 
+let sessionId = null;
+
 sendBtn.onclick = send;
+resetBtn.onclick = resetSession;
+
+input.focus();
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && !e.shiftKey) {
+  const isEnter = e.key === "Enter";
+  const isCtrlEnter = isEnter && (e.ctrlKey || e.metaKey);
+
+  if ((isEnter && !e.shiftKey) || isCtrlEnter) {
     e.preventDefault();
     send();
   }
@@ -18,13 +27,29 @@ async function send() {
   const res = await fetch("/api/evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ input: value })
+    body: JSON.stringify({
+      input: value,
+      session_id: sessionId
+    })
   });
 
   const entry = await res.json();
+  sessionId = entry.session.session_id;
+
   render(entry);
 
   input.value = "";
+  input.focus();
+
+  if (entry.output.terminal) {
+    resetBtn.classList.remove("hidden");
+  }
+}
+
+function resetSession() {
+  sessionId = null;
+  resetBtn.classList.add("hidden");
+  input.focus();
 }
 
 function render(entry) {
@@ -42,9 +67,12 @@ function render(entry) {
 
     <div class="meta">
       <div>State: ${entry.state.id}</div>
-      <div>Status: <span class="${statusClass}">
-        ${entry.analysis.status.toUpperCase()}
-      </span></div>
+      <div>Status:
+        <span class="${statusClass}">
+          ${entry.analysis.status.toUpperCase()}
+        </span>
+      </div>
+      <div>Terminal: ${entry.output.terminal}</div>
     </div>
 
     ${renderLint(entry.analysis.matches)}
@@ -55,7 +83,7 @@ function render(entry) {
     </details>
   `;
 
-  // 🔹 NYESTE SVAR ØVERST
+  // Nyeste svar øverst
   responses.prepend(el);
 }
 
