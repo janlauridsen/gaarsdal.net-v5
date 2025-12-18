@@ -2,7 +2,8 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8">
-  <title>Workbench</title>
+  <title>Test Workbench</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="animate-fadeIn">
@@ -12,9 +13,19 @@
 </header>
 
 <main class="max-w-5xl mx-auto px-6 pb-16">
-  <textarea id="userInput" rows="4" class="w-full p-4 border"></textarea>
-  <button id="sendBtn" class="mt-4 px-6 py-2 bg-black text-white">Send</button>
-  <section id="responseList" class="space-y-8 mt-10"></section>
+
+<section class="mb-10">
+  <label class="block mb-2 font-medium">Simuler brugerinput</label>
+  <textarea id="userInput" rows="4"
+    class="w-full p-4 rounded border border-gray-300 bg-white"></textarea>
+  <button id="sendBtn"
+    class="mt-4 px-6 py-2 rounded bg-black text-white">
+    Send
+  </button>
+</section>
+
+<section id="responseList" class="space-y-8"></section>
+
 </main>
 
 <script src="workbench.js"></script>
