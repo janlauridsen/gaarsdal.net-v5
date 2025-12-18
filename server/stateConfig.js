@@ -12,10 +12,10 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 120,
-    prompt_id: "state_0_v3"
+    prompt_id: "state_1_v3"
   },
 
-  // 2 — Praktisk / administrativ (AI bypass)
+  // 2 — Praktisk / administrativ
   "2": {
     ai: false,
     bypass_reason: "practical"
@@ -26,7 +26,7 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 220,
-    prompt_id: "state_4_v2"
+    prompt_id: "state_4_v3"
   },
 
   // 4 — Hypnose generelt
@@ -50,10 +50,10 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 180,
-    prompt_id: "state_4_v2"
+    prompt_id: "state_4_v3"
   },
 
-  // 7 — Snævert tema (fx flyskræk)
+  // 7 — Snævert tema
   "7": {
     ai: true,
     temperature: 0.0,
@@ -69,13 +69,13 @@ export const stateConfig = {
     prompt_id: "state_8_v2"
   },
 
-  // 9 — Andet / uden for scope
+  // 9 — Uden for scope
   "9": {
     ai: false,
     bypass_reason: "out_of_scope"
   },
 
-  // G — Guard state (tværgående)
+  // G — Guard
   "G": {
     ai: true,
     temperature: 0.0,
