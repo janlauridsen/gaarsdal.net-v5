@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* =====================================================
-   Base
-===================================================== */
-
 html, body {
   margin: 0;
   padding: 0;
@@ -13,10 +9,6 @@ html, body {
   color: #2C2A28;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
-
-/* =====================================================
-   Typography
-===================================================== */
 
 .text-h1 {
   font-size: 48px;
@@ -29,10 +21,6 @@ html, body {
   line-height: 1.7;
 }
 
-/* =====================================================
-   Inputs
-===================================================== */
-
 textarea,
 input,
 select,
@@ -41,22 +29,8 @@ button {
   font-size: 14px;
 }
 
-textarea {
-  resize: vertical;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* =====================================================
-   Cards & Panels
-===================================================== */
+textarea { resize: vertical; }
+button { cursor: pointer; }
 
 article {
   background: #FFFFFF;
@@ -73,10 +47,6 @@ details summary::-webkit-details-marker {
   display: none;
 }
 
-/* =====================================================
-   Status Indicators
-===================================================== */
-
 .status-dot {
   display: inline-block;
   width: 8px;
@@ -84,40 +54,18 @@ details summary::-webkit-details-marker {
   border-radius: 50%;
 }
 
-.status-ok {
-  background: #2E7D32;
-}
-
-.status-warn {
-  background: #F9A825;
-}
-
-.status-error {
-  background: #C62828;
-}
-
-/* =====================================================
-   Animations
-===================================================== */
+.status-ok { background: #2E7D32; }
+.status-warn { background: #F9A825; }
+.status-error { background: #C62828; }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
   animation: fadeIn 0.25s ease-out;
 }
-
-/* =====================================================
-   Scrollbars
-===================================================== */
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -126,22 +74,4 @@ details summary::-webkit-details-marker {
 ::-webkit-scrollbar-thumb {
   background: #D8D5CC;
   border-radius: 6px;
-}
-
-/* =====================================================
-   Utility
-===================================================== */
-
-.mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-.muted {
-  color: #6F6C66;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid #E2E0D8;
-  margin: 24px 0;
 }
