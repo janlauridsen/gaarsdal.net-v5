@@ -1,0 +1,10 @@
+{
+  "name": "gaarsdal-net-v5",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "express": "^4.19.2",
+    "uuid": "^9.0.1",
+    "openai": "^4.40.0"
+  }
+}
