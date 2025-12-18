@@ -1,59 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html, body {
   background: #EFEDE7;
   color: #2C2A28;
   font-family: system-ui, sans-serif;
 }
 
-/* Headings */
+.container {
+  max-width: 960px;
+  margin: auto;
+  padding: 24px;
+}
+
 .text-h1 {
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 42px;
+  margin-bottom: 12px;
 }
 
-/* State indicator */
-.state-indicator {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 6px 10px;
-  border: 1px solid #E2E0D8;
-  border-radius: 6px;
-  background: #FFFFFF;
-  font-size: 14px;
-}
-
-.state-label {
-  font-weight: 600;
-}
-
-.state-trigger {
-  color: #6F6C66;
-}
-
-/* Response cards */
-article {
-  background: #FFFFFF;
-  border: 1px solid #E2E0D8;
-  border-radius: 6px;
+textarea {
+  width: 100%;
   padding: 12px;
 }
 
-/* Status dots */
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+button {
+  margin-top: 12px;
+  padding: 8px 16px;
 }
 
-.status-ok { background: #2E7D32; }
-.status-warn { background: #F9A825; }
-.status-error { background: #C62828; }
+article {
+  background: #fff;
+  padding: 12px;
+  margin-top: 16px;
+  border-radius: 6px;
+}
 
-/* Animations */
+.state-indicator {
+  font-size: 14px;
+  color: #555;
+}
+
+.error {
+  margin-top: 12px;
+  padding: 10px;
+  background: #C62828;
+  color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
