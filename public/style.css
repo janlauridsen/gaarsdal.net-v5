@@ -1,44 +1,6 @@
-/* Header row inside response */
-.header {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-/* State badge */
-.state-badge {
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #DDD9CE;
-  color: #2C2A28;
-  font-weight: 600;
-}
-
-/* Optional per-state nuance */
-.state-0 { background: #E0DDD4; }
-.state-4 { background: #D6E3F0; }
-.state-5 { background: #E3D6F0; }
-.state-7 { background: #D6F0E1; }
-.state-8 { background: #F0DED6; }
-.state-G { background: #F0D6D6; }
-
-/* Terminal marking */
-article.terminal {
-  border-left: 4px solid #2C2A28;
-}
-
-.terminal-badge {
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #2C2A28;
-  color: #FFFFFF;
-  font-weight: 600;
-}
-
-
+/* =========================
+   Base
+   ========================= */
 html, body {
   margin: 0;
   padding: 0;
@@ -48,6 +10,9 @@ html, body {
     Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 }
 
+/* =========================
+   Layout
+   ========================= */
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -60,7 +25,9 @@ html, body {
   margin-bottom: 6px;
 }
 
-/* Input */
+/* =========================
+   Input & Actions
+   ========================= */
 textarea {
   width: 100%;
   padding: 12px;
@@ -70,22 +37,11 @@ textarea {
   box-sizing: border-box;
 }
 
-/* Buttons */
-button {
-  margin-top: 12px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #E6E3DA;
-  border: 1px solid #BDBAAE;
-  cursor: pointer;
+textarea:focus {
+  outline: none;
+  border-color: #BDBAAE;
 }
 
-button.secondary {
-  background: #EFEDE7;
-  border-style: dashed;
-}
-
-/* Actions row */
 .actions {
   margin-top: 10px;
   display: flex;
@@ -93,27 +49,141 @@ button.secondary {
   align-items: center;
 }
 
-/* Response cards */
-article {
-  background: #fff;
+button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #E6E3DA;
+  border: 1px solid #BDBAAE;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button.secondary {
+  background: #EFEDE7;
+  border-style: dashed;
+}
+
+button:hover {
+  background: #DDD9CE;
+}
+
+/* =========================
+   Timeline
+   ========================= */
+.timeline {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline-row {
+  display: flex;
+  gap: 12px;
+}
+
+.time {
+  font-size: 11px;
+  color: #777;
+  min-width: 70px;
+  text-align: right;
+  padding-top: 4px;
+}
+
+.content {
+  flex: 1;
+}
+
+/* =========================
+   Response Card
+   ========================= */
+article {
+  background: #FFFFFF;
   padding: 16px;
   border-radius: 8px;
   animation: fadeIn 0.25s ease-out;
 }
 
+article.terminal {
+  border-left: 4px solid #2C2A28;
+}
+
+article.collapsed > .timeline-row > .content > p {
+  display: none;
+}
+
+/* =========================
+   Header (badges)
+   ========================= */
+.header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.state-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #DDD9CE;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.state-badge:hover {
+  outline: 1px solid #2C2A28;
+}
+
+.state-0 { background: #E0DDD4; }
+.state-1 { background: #E0DDD4; }
+.state-2 { background: #E6E3DA; }
+.state-4 { background: #D6E3F0; }
+.state-5 { background: #E3D6F0; }
+.state-7 { background: #D6F0E1; }
+.state-8 { background: #F0DED6; }
+.state-9 { background: #EEE; }
+.state-G { background: #F0D6D6; }
+
+.terminal-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #2C2A28;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* =========================
+   Meta
+   ========================= */
 .meta {
   font-size: 13px;
   color: #5A5855;
   margin-top: 10px;
 }
 
-/* Status */
-.status-ok { color: #2E7D32; font-weight: 600; }
-.status-warn { color: #F9A825; font-weight: 600; }
-.status-error { color: #C62828; font-weight: 700; }
+/* =========================
+   Status
+   ========================= */
+.status-ok {
+  color: #2E7D32;
+  font-weight: 600;
+}
 
-/* Lint */
+.status-warn {
+  color: #F9A825;
+  font-weight: 600;
+}
+
+.status-error {
+  color: #C62828;
+  font-weight: 700;
+}
+
+/* =========================
+   Lint
+   ========================= */
 .lint {
   margin-top: 14px;
   background: #F6F4EF;
@@ -132,20 +202,29 @@ article {
 .lint td {
   padding: 6px;
   border-bottom: 1px solid #E0DDD4;
+  text-align: left;
 }
 
-.lint-rule-A { background: #FDECEA; }
-.lint-rule-B { background: #FDECEA; }
-.lint-rule-C { background: #FDECEA; }
-.lint-rule-D { background: #FFF8E1; }
-.lint-rule-E { background: #FFF8E1; }
-.lint-rule-F { background: #FFF8E1; }
+.lint-rule-A,
+.lint-rule-B,
+.lint-rule-C {
+  background: #FDECEA;
+}
 
-/* Details / raw log */
+.lint-rule-D,
+.lint-rule-E,
+.lint-rule-F {
+  background: #FFF8E1;
+}
+
+/* =========================
+   Details / Raw log
+   ========================= */
 details summary {
   cursor: pointer;
   font-size: 13px;
   color: #5A5855;
+  margin-top: 8px;
 }
 
 details pre {
@@ -156,13 +235,23 @@ details pre {
   overflow-x: auto;
 }
 
-/* Utilities */
+/* =========================
+   Utilities
+   ========================= */
 .hidden {
   display: none;
 }
 
-/* Animation */
+/* =========================
+   Animation
+   ========================= */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
