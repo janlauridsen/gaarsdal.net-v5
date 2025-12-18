@@ -11,8 +11,9 @@ app.use(express.static("public"));
 app.post("/api/evaluate", async (req, res) => {
   try {
     const { input, session_id } = req.body;
-    const session = getSession(session_id, req.ip);
+    if (!input) return res.status(400).end();
 
+    const session = getSession(session_id, req.ip);
     const decision = resolveState(input, session);
 
     let output = decision.output || "";
@@ -47,21 +48,20 @@ app.post("/api/evaluate", async (req, res) => {
   }
 });
 
-/* Admin: session list */
 app.get("/api/admin/sessions", (req, res) => {
-  const sessions = getAllSessions().map(s => ({
-    id: s.id,
-    ip: s.ip,
-    created: s.created,
-    last: s.last,
-    entries: s.log.length,
-    hasWarn: s.log.some(e => e.response.analysis.status === "warn"),
-    hasError: s.log.some(e => e.response.analysis.status === "error")
-  }));
-  res.json(sessions);
+  res.json(
+    getAllSessions().map(s => ({
+      id: s.id,
+      ip: s.ip,
+      created: s.created,
+      last: s.last,
+      entries: s.log.length,
+      hasWarn: s.log.some(e => e.response.analysis.status === "warn"),
+      hasError: s.log.some(e => e.response.analysis.status === "error")
+    }))
+  );
 });
 
-/* Admin: session detail */
 app.get("/api/admin/sessions/:id", (req, res) => {
   const s = getAllSessions().find(x => x.id === req.params.id);
   if (!s) return res.status(404).end();
