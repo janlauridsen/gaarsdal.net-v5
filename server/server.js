@@ -1,38 +1,27 @@
 import express from "express";
 import { resolveState } from "./stateResolver.js";
 import { callAI } from "./aiClient.js";
-import { getSession } from "./sessionStore.js";
+import { getSession, getAllSessions } from "./sessionStore.js";
 import { postAnalyze } from "./postAnalysis.js";
 
 const app = express();
-
 app.use(express.json());
 app.use(express.static("public"));
 
 app.post("/api/evaluate", async (req, res) => {
   try {
     const { input, session_id } = req.body;
-
-    if (!input || typeof input !== "string") {
-      return res.status(400).json({ error: "Invalid input" });
-    }
-
     const session = getSession(session_id, req.ip);
 
     const decision = resolveState(input, session);
 
     let output = decision.output || "";
-    let aiMeta = {
-      called: false,
-      model: null,
-      temperature: null,
-      prompt_id: null
-    };
+    let aiMeta = { called: false };
 
-    if (decision.ai === true && decision.prompt) {
-      const aiResult = await callAI(decision.prompt);
-      output = aiResult.text;
-      aiMeta = aiResult.meta;
+    if (decision.ai && decision.prompt) {
+      const ai = await callAI(decision.prompt);
+      output = ai.text;
+      aiMeta = ai.meta;
     }
 
     const analysis = postAnalyze(output, decision.state);
@@ -53,15 +42,30 @@ app.post("/api/evaluate", async (req, res) => {
     });
 
     res.json(response);
-
-  } catch (err) {
-    console.error("SERVER ERROR:", err);
-    res.status(500).json({
-      error: "Internal server error"
-    });
+  } catch {
+    res.status(500).json({ error: "Internal error" });
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+/* Admin: session list */
+app.get("/api/admin/sessions", (req, res) => {
+  const sessions = getAllSessions().map(s => ({
+    id: s.id,
+    ip: s.ip,
+    created: s.created,
+    last: s.last,
+    entries: s.log.length,
+    hasWarn: s.log.some(e => e.response.analysis.status === "warn"),
+    hasError: s.log.some(e => e.response.analysis.status === "error")
+  }));
+  res.json(sessions);
 });
+
+/* Admin: session detail */
+app.get("/api/admin/sessions/:id", (req, res) => {
+  const s = getAllSessions().find(x => x.id === req.params.id);
+  if (!s) return res.status(404).end();
+  res.json(s);
+});
+
+app.listen(3000);
