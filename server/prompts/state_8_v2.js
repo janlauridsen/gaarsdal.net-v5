@@ -1,3 +1,4 @@
+export default `
 Du skal give en terminal faglig afgrænsning.
 
 Krav:
@@ -8,3 +9,4 @@ Krav:
 - Ingen relationel tone
 
 Formålet er at afslutte emnet definitivt.
+`;
