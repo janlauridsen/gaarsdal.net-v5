@@ -1,17 +1,31 @@
 const input = document.getElementById("input");
-const send = document.getElementById("send");
+const sendBtn = document.getElementById("send");
 const responses = document.getElementById("responses");
 
-send.onclick = async () => {
+sendBtn.onclick = send;
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    send();
+  }
+});
+
+async function send() {
+  const value = input.value.trim();
+  if (!value) return;
+
   const res = await fetch("/api/evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ input: input.value })
+    body: JSON.stringify({ input: value })
   });
 
   const entry = await res.json();
   render(entry);
-};
+
+  input.value = "";
+}
 
 function render(entry) {
   const el = document.createElement("article");
@@ -41,7 +55,8 @@ function render(entry) {
     </details>
   `;
 
-  responses.appendChild(el);
+  // 🔹 NYESTE SVAR ØVERST
+  responses.prepend(el);
 }
 
 function renderLint(matches = []) {
@@ -65,7 +80,9 @@ function renderLint(matches = []) {
     <details class="lint" ${open}>
       <summary>Lint (${matches.length})</summary>
       <table>
-        <thead><tr><th>Rule</th><th>Severity</th></tr></thead>
+        <thead>
+          <tr><th>Rule</th><th>Severity</th></tr>
+        </thead>
         <tbody>${rows}</tbody>
       </table>
     </details>
