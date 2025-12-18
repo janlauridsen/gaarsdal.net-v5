@@ -14,6 +14,7 @@ function loadPrompt(id) {
 }
 
 export function resolveState({ input }) {
+
   const t = (input || "").toLowerCase();
 
   let id = "4";
