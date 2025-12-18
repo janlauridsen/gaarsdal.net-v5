@@ -13,22 +13,23 @@ html, body {
   font-weight: 600;
 }
 
-.text-base-lg {
-  font-size: 18px;
-}
-
 article {
-  background: #FFFFFF;
+  background: #fff;
   border: 1px solid #E2E0D8;
   border-radius: 6px;
   padding: 12px;
+  margin-bottom: 12px;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid #E2E0D8;
-  margin: 32px 0;
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
+
+.status-ok { background: #2E7D32; }
+.status-warn { background: #F9A825; }
+.status-error { background: #C62828; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(3px); }
