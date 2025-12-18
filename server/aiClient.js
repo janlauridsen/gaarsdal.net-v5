@@ -1,11 +1,10 @@
-import OpenAI from "openai";
-import { prompts } from "./prompts/index.js";
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
 export async function callAI(state, userInput) {
+  console.log("AI CALL DEBUG");
+  console.log("state:", state);
+  console.log("prompt_id:", state?.prompt_id);
+  console.log("prompt value:", prompts[state?.prompt_id]);
+  console.log("available prompts:", Object.keys(prompts));
+
   const promptText = prompts[state.prompt_id];
 
   if (!promptText || typeof promptText !== "string") {
