@@ -4,89 +4,45 @@ import { resolveState } from "./stateResolver.js";
 import { callAI } from "./aiClient.js";
 import { postAnalyze } from "./postAnalysis.js";
 
-/*
-  Én indgang.
-  Én sandhed.
-*/
-
-export async function handleRequest({
-  input,
-  session_id,
-  ip,
-  geo
-}) {
-  // 1. Session
+export async function handleRequest({ input, session_id, ip, geo }) {
   const session = getOrCreateSession({ session_id, ip, geo });
-
-  // 2. State resolution
   const resolved = resolveState({ input });
 
-  let outputText = "";
-  let aiMeta = {
-    called: false,
-    bypass_reason: resolved.ai.bypass_reason,
-    prompt_id: null,
-    model: "gpt-4.1-mini",
-    error: null
-  };
+  let output = "";
+  let aiMeta = { called: false, bypass_reason: resolved.ai.bypass_reason || null };
 
-  // 3. AI call (if applicable)
   if (resolved.ai.called) {
-    try {
-      outputText = await callAI(resolved.ai.prompt);
-      aiMeta = {
-        called: true,
-        bypass_reason: null,
-        prompt_id: resolved.ai.prompt.id,
-        model: "gpt-4.1-mini",
-        error: null
-      };
-    } catch (err) {
-      outputText = "Systemfejl.";
-      aiMeta.error = err.message;
-    }
+    output = await callAI(resolved.ai.prompt);
+    aiMeta = {
+      called: true,
+      prompt_id: resolved.ai.prompt.id,
+      model: "gpt-4.1-mini",
+      error: null
+    };
   } else {
-    outputText = "Dette håndteres administrativt.";
+    output = "Dette håndteres administrativt.";
   }
 
-  // 4. Post-analysis
-  const analysis = postAnalyze(outputText);
+  const analysis = postAnalyze(output);
 
-  // 5. Log entry (KANONISK)
-  const logEntry = {
+  appendLog(session.session_id, {
     timestamp: Date.now(),
-
     session: {
       session_id: session.session_id,
       ip: session.ip,
       geo: session.geo
     },
-
-    input: {
-      raw: input
-    },
-
-    state: {
-      id: resolved.state.id
-    },
-
+    input: { raw: input },
+    state: resolved.state,
     transition: resolved.transition,
-
     ai: aiMeta,
-
-    output: {
-      text: outputText,
-      terminal: resolved.terminal
-    },
-
+    output: { text: output, terminal: resolved.terminal },
     analysis
-  };
-
-  appendLog(session.session_id, logEntry);
+  });
 
   return {
     session_id: session.session_id,
-    output: outputText,
+    output,
     terminal: resolved.terminal
   };
 }
