@@ -42,7 +42,7 @@ export const stateConfig = {
     ai: true,
     temperature: 0.0,
     max_tokens: 250,
-    prompt_id: "state_5_v2"
+    prompt_id: "state_5_v3"
   },
 
   // 6 — Tema-afklaring
