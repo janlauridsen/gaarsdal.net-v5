@@ -29,17 +29,48 @@ async function send() {
 }
 
 function render(i, d) {
+  const statusClass =
+    d.analysis.status === "ok"
+      ? "status-ok"
+      : d.analysis.status === "warn"
+      ? "status-warn"
+      : "status-error";
+
   const el = document.createElement("article");
-  el.className = "p-6 bg-white rounded";
+  el.className = "p-6 bg-white rounded animate-fadeIn";
   el.innerHTML = `
-    <strong>Svar #${i}</strong>
-    <p>${d.output}</p>
-    <details>
-      <summary>Diagnostik</summary>
-      <div>
-        State: ${d.state.id} – ${d.state.label}<br>
-        Trigger: ${d.trigger}<br>
-        AI: ${d.ai.called ? d.ai.model : "no"}
+    <div class="flex items-center justify-between">
+      <strong>Svar #${i}</strong>
+      <span class="status-dot ${statusClass}"></span>
+    </div>
+
+    <p class="mt-4">${d.output}</p>
+
+    <details class="mt-4">
+      <summary class="cursor-pointer text-sm font-medium">
+        Diagnostik
+      </summary>
+
+      <div class="text-sm mt-4 space-y-2">
+        <div><b>Status:</b> ${d.analysis.status.toUpperCase()}</div>
+        <div><b>State:</b> ${d.state.id} – ${d.state.label}</div>
+        <div><b>Trigger:</b> ${d.trigger}</div>
+
+        <div class="pt-2">
+          <b>AI:</b>
+          ${d.ai.called ? d.ai.model : "not used"}
+        </div>
+
+        <div class="pt-2">
+          <b>Anomalies:</b>
+          ${
+            d.analysis.anomalies.length
+              ? `<ul>${d.analysis.anomalies
+                  .map(a => `<li>${a}</li>`)
+                  .join("")}</ul>`
+              : "[]"
+          }
+        </div>
       </div>
     </details>
   `;
