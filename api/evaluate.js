@@ -1,4 +1,5 @@
-import { getOrCreateSession, appendLog } from "./_lib/logStore.js";
+import { getOrCreateSession } from "./_lib/sessionStore.js";
+import { appendLog } from "./_lib/logStore.js";
 import { resolveState } from "./_lib/stateResolver.js";
 import { callAI } from "./_lib/aiClient.js";
 import { postAnalyze } from "./_lib/postAnalysis.js";
