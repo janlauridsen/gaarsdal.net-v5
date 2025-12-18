@@ -8,6 +8,14 @@ Samme struktur anvendes til:
 - senere persistens (database / filer)
 - Admin UI
 
+### ai
+
+ai.temperature og ai.max_tokens er obligatoriske,
+når ai.called = true.
+
+De afspejler state-specifikke systembeslutninger
+og må ikke ændres dynamisk.
+
 ### session.geo
 
 Geo-data leveres af Vercel og er:
