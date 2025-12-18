@@ -6,17 +6,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="animate-fadeIn">
-<main class="max-w-6xl mx-auto px-6 py-12">
-  <h1 class="text-h1 mb-6">Admin · Sessions</h1>
-
-  <label><input type="checkbox" id="filterWarn"> WARN</label>
-  <label><input type="checkbox" id="filterError"> ERROR</label>
-
-  <div id="sessionList" class="mt-6 space-y-4"></div>
-  <hr>
-  <div id="sessionDetail"></div>
+<main class="container">
+  <h1 class="text-h1">Admin</h1>
+  <button id="loadBtn">Load sessions</button>
+  <pre id="out"></pre>
 </main>
-
 <script src="admin.js"></script>
 </body>
 </html>
