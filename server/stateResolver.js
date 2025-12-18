@@ -1,45 +1,44 @@
+import { stateConfig } from "./stateConfig.js";
+
 export function resolveState(input) {
   const t = input.toLowerCase();
 
+  let state = { id: "4", label: "Hypnose generelt" };
+  let trigger = "faglig";
+  let terminal = false;
+
   if (/(idiot|fup|dum)/.test(t)) {
-    return {
-      state: { id: "G", label: "Guard" },
-      trigger: "provokation",
-      ai: false,
-      output: "Dette værktøj deltager ikke i personlige angreb."
-    };
+    state = { id: "G", label: "Guard" };
+    trigger = "G";
+  } else if (t.includes("book")) {
+    state = { id: "2", label: "Praktisk" };
+    trigger = "praktisk";
+  } else if (t.includes("fly")) {
+    state = { id: "7", label: "Flyskræk" };
+    trigger = "tema";
+  } else if (t.includes("for altid")) {
+    state = { id: "8", label: "Terminal" };
+    trigger = "gentagelse";
+    terminal = true;
   }
 
-  if (t.includes("book")) {
-    return {
-      state: { id: 2, label: "Praktisk" },
-      trigger: "praktisk",
-      ai: false,
-      output: "Du kan booke via hjemmesiden."
-    };
-  }
-
-  if (t.includes("fly")) {
-    return {
-      state: { id: 7, label: "Flyskræk" },
-      trigger: "tema",
-      ai: true,
-      prompt: {
-        id: "state_7_v1",
-        system: "Faglig afklaring af flyskræk.",
-        user: input
-      }
-    };
-  }
+  const cfg = stateConfig[state.id] || {};
 
   return {
-    state: { id: 4, label: "Hypnose generelt" },
-    trigger: "faglig",
-    ai: true,
-    prompt: {
-      id: "state_4_v1",
-      system: "Faglig definition af hypnose.",
-      user: input
-    }
+    state,
+    trigger,
+    terminal,
+    transition_type: terminal ? "reset" : "enter",
+    ai: cfg.ai === true,
+    bypass_reason: cfg.bypass_reason || null,
+    prompt: cfg.ai
+      ? {
+          id: cfg.prompt_id,
+          system: `State ${state.id}: ${state.label}`,
+          user: input,
+          temperature: cfg.temperature,
+          max_tokens: cfg.max_tokens
+        }
+      : null
   };
 }
