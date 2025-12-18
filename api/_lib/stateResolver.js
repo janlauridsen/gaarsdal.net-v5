@@ -1,5 +1,17 @@
 import { stateConfig } from "./stateConfig.js";
-import { loadPrompt } from "../renderResponse.js";
+import fs from "fs";
+import path from "path";
+
+function loadPrompt(id) {
+  const filePath = path.join(
+    process.cwd(),
+    "api",
+    "_lib",
+    "prompts",
+    `${id}.txt`
+  );
+  return fs.readFileSync(filePath, "utf8");
+}
 
 export function resolveState({ input }) {
   const t = input.toLowerCase();
