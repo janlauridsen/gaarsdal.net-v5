@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Workbench · gaarsdal.net</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="animate-fadeIn">
+
+  <!-- Header -->
+  <header class="max-w-5xl mx-auto px-6 py-8">
+    <h1 class="text-h1 mb-4">Test Workbench</h1>
+    <p class="text-base-lg max-w-3xl">
+      Internt test- og inspektionsværktøj.
+      Viser systemets endelige output, state-afgørelser og diagnostik.
+    </p>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pb-16">
+
+    <!-- Zone A: Input -->
+    <section class="mb-10">
+      <label class="block mb-2 font-medium">
+        Simuler brugerinput
+      </label>
+
+      <textarea
+        id="userInput"
+        rows="4"
+        class="w-full p-4 rounded border border-gray-300 bg-white focus:outline-none"
+        placeholder="Skriv et spørgsmål eller test-input…"
+      ></textarea>
+
+      <div class="mt-4">
+        <button
+          id="sendBtn"
+          class="px-6 py-2 rounded bg-black text-white hover:opacity-90"
+        >
+          Send
+        </button>
+      </div>
+    </section>
+
+    <!-- Zone B + C: Sekvens-output -->
+    <section id="responseList" class="space-y-8">
+      <!-- Response cards tilføjes dynamisk -->
+    </section>
+
+  </main>
+
+  <script src="workbench.js"></script>
+</body>
+</html>
