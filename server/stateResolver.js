@@ -1,4 +1,5 @@
 import { stateConfig } from "./stateConfig.js";
+import { loadPrompt } from "./promptLoader.js";
 
 export function resolveState(input) {
   const t = input.toLowerCase();
@@ -34,7 +35,7 @@ export function resolveState(input) {
     prompt: cfg.ai
       ? {
           id: cfg.prompt_id,
-          system: `State ${state.id}: ${state.label}`,
+          system: loadPrompt(cfg.prompt_id),
           user: input,
           temperature: cfg.temperature,
           max_tokens: cfg.max_tokens
