@@ -8,11 +8,20 @@ Formål:
 - Afgrænse evidens, begreber og risici
 - Sikre etisk, juridisk og psykologisk robust adfærd
 
-Arkitektur:
-Browser → Server → AI API
+Arkitektur (V1):
+
+Browser → Vercel Serverless Function (/api/evaluate)
+        → State Resolver (stateless)
+        → AI API (kontrolleret)
+        → Post-analysis (lint)
+        → In-memory logging
 
 Grundprincip:
-- AI er stateless pr. kald
-- UI + server fungerer som en state machine
-- AI bruges som et kontrolleret tekstmodul
-- Systemet ejer struktur, etik og grænser
+Begrænsninger i V1:
+- Ingen persistence
+- Ingen replay
+- Ingen brugerprofiler
+- Ingen adaptiv logik
+
+Disse er bevidste fravalg i V1.
+
