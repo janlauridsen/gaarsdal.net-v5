@@ -22,3 +22,12 @@ States:
 State afgør prompt.
 Prompt afgør output.
 AI afgør intet selv.
+
+Implementationsnote (V1):
+
+State resolution er deterministisk og input-baseret.
+Systemet har ingen samtalehukommelse.
+
+Resolveren er defensiv:
+Manglende eller tomt input reduceres til tom streng.
+Dette er for at sikre stabilitet i serverless runtime.
