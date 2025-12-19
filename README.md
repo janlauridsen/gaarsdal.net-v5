@@ -1,5 +1,21 @@
 # gaarsdal.net-v5
 
+## Status (V1)
+
+Dette repository indeholder en fungerende V1-implementering
+af et AI-baseret fagligt afklaringssystem.
+
+Systemet kører som Vercel serverless functions.
+State, sessioner og logs er in-memory og nulstilles ved redeploy
+eller cold start.
+
+Formålet med V1 er:
+- design-validering
+- test af state machine
+- observation via Test Workbench og Admin UI
+
+Systemet er ikke beregnet til produktion uden persistence.
+
 
 AI-baseret fagligt afklaringssystem med eksplicit state- og aktionstyring.
 
