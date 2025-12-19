@@ -45,3 +45,12 @@ Designprincipper
 - Ingen brugerprofiler
 - IP anvendes kun til sikkerhed og geo
 - Samme datastruktur som Test Workbench
+
+Sessioner i V1 er in-memory og eksisterer kun
+så længe den serverless instans er aktiv.
+
+Ved cold start eller redeploy nulstilles:
+- sessions
+- logs
+
+Dette er forventet og accepteret adfærd i V1.
